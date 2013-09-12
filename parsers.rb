@@ -1,8 +1,8 @@
-require './article.rb'
+require './nodes.rb'
+require 'nokogiri'
+require 'open-uri'
 
 module WikiParser
-	require 'nokogiri'
-	require 'open-uri'
 
 	def WikiParser.parse( article )
 		doc = Nokogiri::HTML( open("http://en.wikipedia.org/wiki/#{article}") )
@@ -13,8 +13,11 @@ module WikiParser
 		last_h3 = nil
 
 		body.css('h2, h3, h4').each do |header|
-			
-			node = Node.new( title: header.content )
+			title = header.content
+			title = title.gsub(/(?<=\[)[^\]]+?(?=\])/, "")
+			title = title.gsub("[","")
+			title = title.gsub("]","")
+			node = Node.new( title: title )
 
 			if header.name == 'h2'
 				article << node
@@ -32,5 +35,8 @@ module WikiParser
 
 		return article
 	end
+end
+
+module NyTimes
 
 end

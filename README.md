@@ -1,3 +1,3 @@
-# Learn to earn, until renamed
+# TreeFormation
 
 Project by Gregory Sherrid and Walter Filkins
